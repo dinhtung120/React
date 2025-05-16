@@ -12,9 +12,26 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
     <script>
+      // Định nghĩa component App
       function App() {
-        return React.createElement("header");
+        // Khởi tạo state 'time' với giá trị là thời gian hiện tại
+        const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+        // useEffect sẽ chạy sau khi component được render lần đầu
+        React.useEffect(function () {
+          // Thiết lập interval để cập nhật state 'time' mỗi giây
+          setInterval(function () {
+            setTime(new Date().toLocaleTimeString());
+          });
+        }, []); // Dependency rỗng để chỉ chạy một lần khi mount
+
+        // Trả về phần tử header hiển thị thông báo và thời gian hiện tại
+        return React.createElement("header", null, `Hello React!It's ${time}`);
       }
+
+      // Tạo root React và render component App vào div#root
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(React.createElement(App));
     </script>
   </body>
 </html>
