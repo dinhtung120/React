@@ -145,13 +145,13 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
-
+/*
 // Lấy cuốn sách có id = 2
-const book = getBook(2);
+const book = getBook(3);
 
 // Sử dụng object destructuring để lấy các thuộc tính title, author và genres từ book
-const { title, author, genres, publicationDate } = book;
-console.log(author, title);
+const { title, author, genres, publicationDate, pages } = book;
+console.log(author, title, pages);
 
 // Sử dụng array destructuring để tách các phần tử của mảng genres
 // firstGenre: phần tử đầu tiên
@@ -169,7 +169,56 @@ console.log(newGenres);
 const updateBook = { ...book, moviePublicationDate: "2023-10-01", pages: 200 };
 console.log(updateBook);
 
-const summary = `${title} là một cuốn sách của tác giả ${author}, xuất bản vào năm ${
-  publicationDate.split("-")[0]
-}`;
+function getYear(str) {
+  return str.split("-")[0];
+}
+
+const getYearArrow = (str) => str.split("-")[0];
+
+console.log(getYearArrow(publicationDate));
+
+const summary = `${title} là một cuốn sách của tác giả ${author}, xuất bản vào năm ${getYearArrow(
+  publicationDate
+)}`;
 console.log(summary);
+
+const pagesRange = pages > 1000 ? "over a thousand" : "less than 1000";
+pagesRange;
+
+console.log(`The book has ${pagesRange} pages.`);
+
+const totalReviewCount = (str) =>
+  str.reviews.librarything?.reviewsCount ??
+  0 + str.reviews?.goodreads.reviewsCount;
+
+console.log(totalReviewCount(book));
+*/
+const totalReviewCount = (str) =>
+  str.reviews.librarything?.reviewsCount ??
+  0 + str.reviews?.goodreads.reviewsCount ??
+  0;
+
+const books = getBooks();
+
+const titles = books.map((books) => books.title);
+titles;
+
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewsCount: totalReviewCount(book),
+}));
+essentialData;
+
+const longBooks = books
+  .filter((bools) => bools.pages > 500)
+  .filter((books) => books.hasMovieAdaptation);
+longBooks;
+
+const adventureBooks = books
+  .filter((book) => book.genres.includes("adventure"))
+  .map((book) => book.title);
+adventureBooks;
+
+const pagesAllBooks = books.reduce((x, book) => x + book.pages, 0);
+pagesAllBooks;
