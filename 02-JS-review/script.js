@@ -1,4 +1,4 @@
-// Array chứa thông tin về các cuốn sách
+// Dữ liệu sách
 const data = [
   {
     id: 1,
@@ -136,63 +136,64 @@ const data = [
   },
 ];
 
-// Function trả về toàn bộ danh sách sách
+// Lấy tất cả sách
 function getBooks() {
   return data;
 }
 
-// Function tìm và trả về một cuốn sách theo id
+// Tìm sách theo id
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
-/*
-// Lấy cuốn sách có id = 2
+
+// Lấy sách có id = 3
 const book = getBook(3);
 
-// Sử dụng object destructuring để lấy các thuộc tính title, author và genres từ book
+// Destructuring object
 const { title, author, genres, publicationDate, pages } = book;
 console.log(author, title, pages);
 
-// Sử dụng array destructuring để tách các phần tử của mảng genres
-// firstGenre: phần tử đầu tiên
-// secondGenre: phần tử thứ hai
-// orther: các phần tử còn lại (rest operator)
+// Destructuring array
 const [firstGenre, secondGenre, ...orther] = genres;
 console.log(firstGenre, secondGenre, orther);
 
-// Tạo một mảng mới bằng cách spread toàn bộ genres và thêm một phần tử mới
+// Spread operator với array
 const newGenres = [...genres, "new genre"];
 console.log(newGenres);
 
-// Tạo một object mới từ book, đồng thời thêm/cập nhật các thuộc tính mới
-// Sử dụng spread operator để copy toàn bộ thuộc tính của book
+// Spread operator với object
 const updateBook = { ...book, moviePublicationDate: "2023-10-01", pages: 200 };
 console.log(updateBook);
 
+// Hàm lấy năm từ chuỗi ngày
 function getYear(str) {
   return str.split("-")[0];
 }
 
+// Arrow function lấy năm
 const getYearArrow = (str) => str.split("-")[0];
 
 console.log(getYearArrow(publicationDate));
 
+// Template literal
 const summary = `${title} là một cuốn sách của tác giả ${author}, xuất bản vào năm ${getYearArrow(
   publicationDate
 )}`;
 console.log(summary);
 
+// Toán tử điều kiện
 const pagesRange = pages > 1000 ? "over a thousand" : "less than 1000";
 pagesRange;
 
 console.log(`The book has ${pagesRange} pages.`);
 
-const totalReviewCount = (str) =>
+// Optional chaining và nullish coalescing
+const totalReviewCount1 = (str) =>
   str.reviews.librarything?.reviewsCount ??
   0 + str.reviews?.goodreads.reviewsCount;
 
-console.log(totalReviewCount(book));
-*/
+console.log(totalReviewCount1(book));
+
 const totalReviewCount = (str) =>
   str.reviews.librarything?.reviewsCount ??
   0 + str.reviews?.goodreads.reviewsCount ??
@@ -200,6 +201,7 @@ const totalReviewCount = (str) =>
 
 const books = getBooks();
 
+// Array methods
 const titles = books.map((books) => books.title);
 titles;
 
@@ -222,3 +224,45 @@ adventureBooks;
 
 const pagesAllBooks = books.reduce((x, book) => x + book.pages, 0);
 pagesAllBooks;
+
+// Sort array
+const arr = [3, 7, 1, 9, 6];
+const sorted = arr.slice().sort((a, b) => a - b);
+
+sorted;
+arr;
+
+const sortByPages = books
+  .slice()
+  .sort((a, b) => a.pages - b.pages)
+  .map((book) => ({ titles: book.title, pages: book.pages }));
+sortByPages;
+
+// CRUD operations
+const newBooks = { id: 6, title: "New Book", author: "New Author", pages: 300 };
+
+const booksAfterAdd = [...books, newBooks].map((books) => ({
+  id: books.id,
+  titles: books.title,
+}));
+booksAfterAdd;
+
+const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3);
+booksAfterDelete;
+
+const booksAfterUpdate = booksAfterDelete.map((book) =>
+  book.id === 6 ? { ...book, title: "Updated Book" } : book
+);
+booksAfterUpdate;
+
+// Fetch API với Promise
+fetch("https://jsonplaceholder.typicode.com/todos")
+  .then((res) => res.json())
+  .then((data) => console.log(data));
+
+// Fetch API với async/await
+async function getTodos() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data = await res.json();
+  console.log(data);
+}
