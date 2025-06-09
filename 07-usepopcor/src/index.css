@@ -54,10 +54,14 @@ body {
   max-width: 42rem;
   background-color: var(--color-background-500);
   border-radius: 0.9rem;
-  overflow: none;
+  overflow: scroll;
   position: relative;
 }
 
+/* ẩn scroll bar */
+.box::-webkit-scrollbar {
+  display: none;
+}
 .loader {
   text-align: center;
   text-transform: uppercase;

@@ -28,6 +28,7 @@ export default function StarRating({
   size = 48, // Kích thước sao
   messages = [], // Mảng tin nhắn tương ứng với số sao
   defaultRating = 0, // Đánh giá mặc định
+  onSetRating,
 }) {
   // State quản lý đánh giá hiện tại và tạm thời
   const [rating, setRating] = useState(defaultRating);
@@ -40,6 +41,11 @@ export default function StarRating({
     fontSize: `${size / 1.5}px`,
   };
 
+  function handleRating(i) {
+    setRating(i);
+    onSetRating(i);
+  }
+
   return (
     <div style={containerStyle}>
       <div style={starContainerStyle}>
@@ -47,7 +53,7 @@ export default function StarRating({
           <Star
             key={i}
             full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
-            onRate={() => setRating(i + 1)}
+            onRate={() => handleRating(i + 1)}
             onHoverIn={() => setTempRating(i + 1)}
             onHoverOut={() => setTempRating(0)}
             color={color}
