@@ -2,6 +2,7 @@ import { createContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { useReducer } from "react";
+import { useCallback } from "react";
 
 const BASE_URL = "http://localhost:8000";
 
@@ -16,7 +17,7 @@ const initialCity = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case " loading":
+    case "loading":
       return {
         ...state,
         isLoading: true,
@@ -80,19 +81,24 @@ function CitiesProvider({ children }) {
     }
     fetchCities();
   }, []);
-  async function getCity(id) {
-    dispatch({ type: "loading" });
-    try {
-      const res = await fetch(`${BASE_URL}/cities/${id}`);
-      const data = await res.json();
-      dispatch({ type: "city/loaded", payload: data });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payload: "Something went wrong while fetching city.",
-      });
-    }
-  }
+  const getCity = useCallback(
+    async function getCity(id) {
+      if (id === currentCity.id) return;
+
+      dispatch({ type: "loading" });
+      try {
+        const res = await fetch(`${BASE_URL}/cities/${id}`);
+        const data = await res.json();
+        dispatch({ type: "city/loaded", payload: data });
+      } catch {
+        dispatch({
+          type: "rejected",
+          payload: "Something went wrong while fetching city.",
+        });
+      }
+    },
+    [currentCity.id]
+  );
 
   async function createCity(newCity) {
     dispatch({ type: "loading" });
