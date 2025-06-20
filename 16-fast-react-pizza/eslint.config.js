@@ -30,6 +30,7 @@ export default [
       "react/react-in-jsx-scope": "off", //tắt cảnh báo import React cho React 17+
       "no-unused-vars": "warn", // Đổi từ 'error' thành 'warn'
       "react/prop-types": "off", // Tắt PropTypes nếu không cần (phổ biến khi dùng TypeScript hoặc không dùng PropTypes)
+      // "no-constant-binary-expression": "off", // Tắt cảnh báo no-constant-binary-expression
     },
     settings: {
       react: {
