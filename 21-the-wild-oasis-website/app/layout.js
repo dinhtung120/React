@@ -1,3 +1,4 @@
+import Logo from "./components/Logo";
 import Navigation from "./components/Navigation";
 
 export const metadata = {
@@ -8,7 +9,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navigation />
+        <header>
+          <Logo />
+          <Navigation />
+        </header>
         <main>{children}</main>
         <footer>Copyright by Lucifer</footer>
       </body>
