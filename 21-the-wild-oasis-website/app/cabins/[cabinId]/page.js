@@ -34,7 +34,7 @@ export default async function Page({ params }) {
         </div>
 
         <div>
-          <h3 className="mb-5 w-[150%] translate-x-[-254px] bg-stone-950 p-6 pb-1 text-7xl font-black text-stone-100">
+          <h3 className="mb-5 w-[150%] translate-x-[-254px] bg-stone-900 p-6 pb-1 text-7xl font-black text-stone-100">
             Cabin {name}
           </h3>
 
